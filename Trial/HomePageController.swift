@@ -22,6 +22,17 @@ class SomeImage: NSObject {
             "someImage" : "someImage",
         ]
     }
+    
+    override class func kinveyPropertyToCollectionMapping() -> [NSObject : AnyObject]! {
+        return [
+            "someImage" : KCSFileStoreCollectionName,
+            
+        ]
+    }
+    
+    override func referenceKinveyPropertiesOfObjectsToSave() -> [AnyObject]! {
+        return ["someImage"]
+    }
 }
 
 
@@ -54,31 +65,16 @@ class HomePageController: UIViewController, UINavigationControllerDelegate, UIIm
         someImage.someName = "Object with Image"
         someImage.somePlace = "New York, NY, Haribol"
         someImage.someImage = imageView.image
-        print(imageOutlet.image)
+        print(someImage.someImage)
         
         someImageStore.saveObject(someImage, withCompletionBlock: {
             (objectsOrNil:[AnyObject]!, errorOrNil: NSError!) -> Void in
             print("Image Object Saved")
             
             }, withProgressBlock: nil)
-        
-        
-        
-        
-
     }
    
-    override class func kinveyPropertyToCollectionMapping() -> [NSObject : AnyObject]! {
-        return [
-            "someImage" : KCSFileStoreCollectionName,
-            
-            
-        ]
-    }
-    
-    override func referenceKinveyPropertiesOfObjectsToSave() -> [AnyObject]! {
-        return ["someImage"]
-    }
+  
     
 
     
