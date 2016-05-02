@@ -8,28 +8,9 @@
 
 import UIKit
 
-
-class Event : NSObject {    //all NSObjects in Kinvey implicitly implement KCSPersistable
-    var entityId: String? //Kinvey entity _id
-    var name: String?
-    var date: NSDate?
-    var location: String?
-    var metadata: KCSMetadata? //Kinvey metadata, optional
-    
-    
-    override func hostToKinveyPropertyMapping() -> [NSObject : AnyObject]! {
-        return [
-            "entityId" : KCSEntityKeyId, //the required _id field
-            "name" : "name",
-            "date" : "date",
-            "location" : "location",
-            "metadata" : KCSEntityKeyMetadata //optional _metadata field
-        ]
-    }
-}
-
 class ViewController: UIViewController {
     
+    //Mark: Outlets
     
     @IBOutlet weak var UserNameValue: UITextField!
     
@@ -71,8 +52,13 @@ class ViewController: UIViewController {
         
     }
     
+    
+    // Mark: Kinvey functions
+    
     func createNewUser(){
+        
         // Create a new user with the username 'kinvey' and the password '12345'
+        
         if KCSUser.activeUser() == nil {
             KCSUser.userWithUsername(
                 UserNameValue.text,
@@ -135,16 +121,14 @@ class ViewController: UIViewController {
             },
             withProgressBlock: nil
         )
-        
     }
-    
-    
         
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    // Mark: Actions
     
     @IBAction func AddNewUser(sender: AnyObject) {
         //call function createnewuser to create the new user as provided in the fields
